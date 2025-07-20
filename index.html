@@ -285,7 +285,70 @@
       }
 
       #videoElement {
-        height: 250px;
+        height: 70vh;
+        max-height: 70vh;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .camera-container {
+        width: 100%;
+        min-width: unset;
+      }
+
+      .container {
+        padding: 10px;
+      }
+
+      /* Hide other elements when camera is active on mobile */
+      .mobile-camera-active .privacy-notice,
+      .mobile-camera-active .mobile-notice,
+      .mobile-camera-active .preview-container,
+      .mobile-camera-active .storage-info {
+        display: none;
+      }
+
+      /* Keep gallery visible but make it compact on mobile */
+      .mobile-camera-active .gallery {
+        margin-top: 20px;
+      }
+
+      .mobile-camera-active .gallery h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .mobile-camera-active .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 8px;
+      }
+
+      .mobile-camera-active .gallery-item {
+        border-radius: 8px;
+      }
+
+      .mobile-camera-active .gallery-item img {
+        height: 80px;
+      }
+
+      .mobile-camera-active .gallery-item-overlay {
+        font-size: 0.6rem;
+        padding: 5px;
+      }
+
+      .mobile-camera-active .action-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6rem;
+      }
+
+      .mobile-camera-active .camera-section {
+        margin-bottom: 0;
+      }
+
+      .mobile-camera-active h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
       }
     }
   </style>
@@ -397,6 +460,9 @@
           constraints.video.focusMode = 'continuous';
           constraints.video.exposureMode = 'continuous';
           constraints.video.whiteBalanceMode = 'continuous';
+
+          // Add fullscreen camera mode for mobile
+          document.body.classList.add('mobile-camera-active');
         }
 
         stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -409,6 +475,11 @@
 
         if (isMobile) {
           showStatus('Mobile camera activated with high quality settings! Tap capture when ready.', 'success');
+
+          // Auto-hide status on mobile for better camera view
+          setTimeout(() => {
+            statusDiv.style.display = 'none';
+          }, 2000);
         } else {
           showStatus('Camera started successfully! You can now capture photos.', 'success');
         }
@@ -487,6 +558,11 @@
         capturePhotoBtn.disabled = true;
         stopCameraBtn.disabled = true;
         cameraSelect.disabled = false;
+
+        // Exit fullscreen camera mode on mobile
+        if (isMobile) {
+          document.body.classList.remove('mobile-camera-active');
+        }
 
         showStatus('Camera stopped.', 'info');
       }
