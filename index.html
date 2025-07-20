@@ -410,6 +410,20 @@
       <h2>📁 Stored Photos</h2>
       <div id="galleryGrid" class="gallery-grid"></div>
     </div>
+
+    <!-- Image Viewer Modal -->
+    <div id="imageViewer" class="image-viewer">
+      <button class="close-btn" onclick="closeImageViewer()">×</button>
+      <div class="viewer-info">
+        <div id="viewerTimestamp"></div>
+      </div>
+      <img id="viewerImage" class="viewer-image" alt="Full size image">
+      <div class="viewer-controls">
+        <button id="viewerDownload" class="btn btn-success">💾 Download</button>
+        <button id="viewerDelete" class="btn btn-danger">🗑️ Delete</button>
+        <button class="btn btn-primary" onclick="closeImageViewer()">Close</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -432,8 +446,9 @@
     // Detect mobile device
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // Load existing photos from localStorage on page load
+    // Load existing photos from sessionStorage on page load
     window.addEventListener('load', () => {
+      loadPhotosFromStorage();
       loadStoredPhotos();
       updateStorageCount();
     });
@@ -576,10 +591,32 @@
       }
     });
 
-    // In-memory storage for photos (Claude.ai compatible)
+    // Persistent storage using sessionStorage (works in Claude.ai and persists during session)
     let photoStorage = [];
 
-    // Save photo to memory
+    // Load photos from sessionStorage
+    function loadPhotosFromStorage() {
+      try {
+        const stored = sessionStorage.getItem('capturedPhotos');
+        if (stored) {
+          photoStorage = JSON.parse(stored);
+        }
+      } catch (error) {
+        console.error('Error loading photos:', error);
+        photoStorage = [];
+      }
+    }
+
+    // Save photos to sessionStorage
+    function savePhotosToStorage() {
+      try {
+        sessionStorage.setItem('capturedPhotos', JSON.stringify(photoStorage));
+      } catch (error) {
+        console.error('Error saving photos:', error);
+      }
+    }
+
+    // Save photo to memory and sessionStorage
     function savePhoto(dataURL) {
       try {
         const timestamp = new Date().toISOString();
@@ -590,6 +627,7 @@
         };
 
         photoStorage.push(photoData);
+        savePhotosToStorage();
         photoCount++;
         updateStorageCount();
 
@@ -611,12 +649,12 @@
       });
     }
 
-    // Add photo to gallery
+    // Add photo to gallery with tap functionality
     function addToGallery(dataURL, timestamp, photoId) {
       const galleryItem = document.createElement('div');
       galleryItem.className = 'gallery-item';
       galleryItem.innerHTML = `
-        <img src="${dataURL}" alt="Captured photo">
+        <img src="${dataURL}" alt="Captured photo" onclick="openImageViewer('${dataURL}', '${timestamp.toISOString()}', '${photoId || 'photo_' + timestamp.getTime()}')">
         <div class="gallery-item-overlay">
           ${timestamp.toLocaleString()}
         </div>
@@ -643,15 +681,20 @@
     function deletePhoto(photoId) {
       if (confirm('Delete this photo?')) {
         photoStorage = photoStorage.filter(photo => photo.id !== photoId);
+        savePhotosToStorage();
         loadStoredPhotos();
         updateStorageCount();
         showStatus('Photo deleted.', 'info');
+
+        // Close image viewer if it's open
+        closeImageViewer();
       }
     }
 
     // Clear all photos
     function clearAllPhotos() {
       photoStorage = [];
+      savePhotosToStorage();
       galleryGrid.innerHTML = '';
       latestCaptureDiv.innerHTML = 'No photo captured yet';
       photoCount = 0;
