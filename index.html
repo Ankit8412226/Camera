@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Capture & Local Storage</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      font-weight: 300;
+    }
+
+    .camera-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .camera-container {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .preview-container {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    #videoElement {
+      width: 100%;
+      max-width: 400px;
+      height: 300px;
+      border-radius: 15px;
+      background: #000;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #canvas {
+      display: none;
+    }
+
+    .controls {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+      color: white;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(238, 90, 82, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .status {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-weight: 500;
+    }
+
+    .status.success {
+      background: rgba(86, 171, 47, 0.1);
+      color: #56ab2f;
+      border: 1px solid rgba(86, 171, 47, 0.3);
+    }
+
+    .status.error {
+      background: rgba(255, 107, 107, 0.1);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    .status.info {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .gallery {
+      margin-top: 40px;
+    }
+
+    .gallery h2 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .gallery-item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      color: white;
+      padding: 15px 10px 10px;
+      font-size: 0.8rem;
+    }
+
+    .gallery-item-actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background: white;
+      transform: scale(1.1);
+    }
+
+    .storage-info {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 10px;
+      color: #667eea;
+    }
+
+    .privacy-notice {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      color: #856404;
+    }
+
+    .privacy-notice h3 {
+      margin-bottom: 10px;
+      color: #856404;
+    }
+
+    @media (max-width: 768px) {
+      .camera-section {
+        flex-direction: column;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 200px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>📸 Camera Capture & Local Storage</h1>
+
+    <div class="privacy-notice">
+      <h3>🔒 Privacy Notice</h3>
+      <p>This application will request access to your camera with your consent. All captured images are stored locally
+        in your browser and never sent to any server. You have full control over your images.</p>
+    </div>
+
+    <div class="camera-section">
+      <div class="camera-container">
+        <h3 style="margin-bottom: 15px; color: #333;">📹 Camera Feed</h3>
+        <video id="videoElement" autoplay muted playsinline></video>
+        <canvas id="canvas"></canvas>
+
+        <div class="controls">
+          <button id="startCamera" class="btn btn-primary">Start Camera</button>
+          <button id="capturePhoto" class="btn btn-success" disabled>📷 Capture Photo</button>
+          <button id="stopCamera" class="btn btn-danger" disabled>Stop Camera</button>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+      </div>
+
+      <div class="preview-container">
+        <h3 style="margin-bottom: 15px; color: #333;">🖼️ Latest Capture</h3>
+        <div id="latestCapture" style="text-align: center; color: #666;">
+          No photo captured yet
+        </div>
+      </div>
+    </div>
+
+    <div class="storage-info">
+      <p><strong>Storage:</strong> <span id="storageCount">0</span> photos stored locally</p>
+      <button id="clearAll" class="btn btn-danger" style="margin-top: 10px;">Clear All Photos</button>
+    </div>
+
+    <div class="gallery">
+      <h2>📁 Stored Photos</h2>
+      <div id="galleryGrid" class="gallery-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    let videoElement = document.getElementById('videoElement');
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    let stream = null;
+    let photoCount = 0;
+
+    const startCameraBtn = document.getElementById('startCamera');
+    const capturePhotoBtn = document.getElementById('capturePhoto');
+    const stopCameraBtn = document.getElementById('stopCamera');
+    const statusDiv = document.getElementById('status');
+    const latestCaptureDiv = document.getElementById('latestCapture');
+    const galleryGrid = document.getElementById('galleryGrid');
+    const storageCountSpan = document.getElementById('storageCount');
+    const clearAllBtn = document.getElementById('clearAll');
+
+    // Load existing photos from localStorage on page load
+    window.addEventListener('load', () => {
+      loadStoredPhotos();
+      updateStorageCount();
+    });
+
+    // Start camera
+    startCameraBtn.addEventListener('click', async () => {
+      try {
+        showStatus('Requesting camera access...', 'info');
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+            facingMode: 'user'
+          }
+        });
+
+        videoElement.srcObject = stream;
+
+        startCameraBtn.disabled = true;
+        capturePhotoBtn.disabled = false;
+        stopCameraBtn.disabled = false;
+
+        showStatus('Camera started successfully! You can now capture photos.', 'success');
+
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        showStatus('Error: Unable to access camera. Please ensure you have granted camera permissions.', 'error');
+      }
+    });
+
+  // Original capture button event listener
+  capturePhotoBtn.addEventListener('click', () => {
+    if (stream) {
+      // Set canvas size to match video
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+
+      // Draw video frame to canvas
+      ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+      // Convert to data URL
+      const dataURL = canvas.toDataURL('image/png');
+
+      // Save to localStorage
+      savePhoto(dataURL);
+
+      // Update display
+      updateLatestCapture(dataURL);
+      showStatus('Photo captured and saved locally!', 'success');
+
+      // Add to gallery
+      addToGallery(dataURL, new Date());
+    }
+  });
+
+  // Option 1: When DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded - page opened');
+    // Initialize your photo capture functionality here
+    initializePhotoCapture();
+  });
+
+  // Option 2: When entire page (including images, stylesheets, etc.) is loaded
+  window.addEventListener('load', () => {
+    console.log('Page fully loaded - browser opened');
+    // Any initialization code when everything is loaded
+    setupCamera();
+  });
+
+  // Option 3: When page becomes visible (useful for tab switching)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      console.log('Page became visible');
+      // Resume camera or refresh functionality
+      resumeCamera();
+    } else {
+      console.log('Page became hidden');
+      // Pause camera to save resources
+      pauseCamera();
+    }
+  });
+
+  // Option 4: When window gains focus
+  window.addEventListener('focus', () => {
+    console.log('Window gained focus');
+    // Reactivate features when user returns to the tab
+  });
+
+  // Option 5: Page unload (when browser/tab closes)
+  window.addEventListener('beforeunload', (e) => {
+    // Clean up resources before page closes
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+    // Optionally show confirmation dialog
+    // e.preventDefault();
+    // e.returnValue = '';
+  });
+
+  // Example initialization functions (you'll need to implement these)
+  function initializePhotoCapture() {
+    // Set up initial state when page opens
+    console.log('Initializing photo capture...');
+  }
+
+  function setupCamera() {
+    // Camera setup code
+    console.log('Setting up camera...');
+  }
+
+  function resumeCamera() {
+    // Resume camera when page becomes visible
+    if (stream && stream.active) {
+      console.log('Camera already active');
+    } else {
+      console.log('Resuming camera...');
+      // Re-initialize camera
+    }
+  }
+
+  function pauseCamera() {
+    // Pause camera to save battery/resources
+    console.log('Pausing camera...');
+  }
+
+    // Stop camera
+    stopCameraBtn.addEventListener('click', () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+        videoElement.srcObject = null;
+
+        startCameraBtn.disabled = false;
+        capturePhotoBtn.disabled = true;
+        stopCameraBtn.disabled = true;
+
+        showStatus('Camera stopped.', 'info');
+      }
+    });
+
+    // Clear all photos
+    clearAllBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to delete all stored photos? This cannot be undone.')) {
+        clearAllPhotos();
+        showStatus('All photos cleared from local storage.', 'info');
+      }
+    });
+
+    // Save photo to localStorage
+    function savePhoto(dataURL) {
+      try {
+        const timestamp = new Date().toISOString();
+        const photoData = {
+          image: dataURL,
+          timestamp: timestamp,
+          id: 'photo_' + Date.now()
+        };
+
+        localStorage.setItem(photoData.id, JSON.stringify(photoData));
+        photoCount++;
+        updateStorageCount();
+
+      } catch (error) {
+        console.error('Error saving photo:', error);
+        showStatus('Error: Unable to save photo to local storage.', 'error');
+      }
+    }
+
+    // Load stored photos
+    function loadStoredPhotos() {
+      galleryGrid.innerHTML = '';
+      const photos = [];
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('photo_')) {
+          try {
+            const photoData = JSON.parse(localStorage.getItem(key));
+            photos.push(photoData);
+          } catch (error) {
+            console.error('Error loading photo:', error);
+          }
+        }
+      }
+
+      // Sort by timestamp (newest first)
+      photos.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      photos.forEach(photo => {
+        addToGallery(photo.image, new Date(photo.timestamp), photo.id);
+      });
+    }
+
+    // Add photo to gallery
+    function addToGallery(dataURL, timestamp, photoId) {
+      const galleryItem = document.createElement('div');
+      galleryItem.className = 'gallery-item';
+      galleryItem.innerHTML = `
+                <img src="${dataURL}" alt="Captured photo">
+                <div class="gallery-item-overlay">
+                    ${timestamp.toLocaleString()}
+                </div>
+                <div class="gallery-item-actions">
+                    <button class="action-btn" onclick="downloadPhoto('${dataURL}', '${timestamp.getTime()}')" title="Download">💾</button>
+                    <button class="action-btn" onclick="deletePhoto('${photoId || 'photo_' + timestamp.getTime()}')" title="Delete">🗑️</button>
+                </div>
+            `;
+
+      galleryGrid.insertBefore(galleryItem, galleryGrid.firstChild);
+    }
+
+    // Download photo
+    function downloadPhoto(dataURL, timestamp) {
+      const link = document.createElement('a');
+      link.download = `captured_photo_${timestamp}.png`;
+      link.href = dataURL;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Delete single photo
+    function deletePhoto(photoId) {
+      if (confirm('Delete this photo?')) {
+        localStorage.removeItem(photoId);
+        loadStoredPhotos();
+        updateStorageCount();
+        showStatus('Photo deleted.', 'info');
+      }
+    }
+
+    // Clear all photos
+    function clearAllPhotos() {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('photo_')) {
+          keys.push(key);
+        }
+      }
+
+      keys.forEach(key => localStorage.removeItem(key));
+
+      galleryGrid.innerHTML = '';
+      latestCaptureDiv.innerHTML = 'No photo captured yet';
+      photoCount = 0;
+      updateStorageCount();
+    }
+
+    // Update storage count
+    function updateStorageCount() {
+      let count = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('photo_')) {
+          count++;
+        }
+      }
+      storageCountSpan.textContent = count;
+    }
+
+    // Update latest capture display
+    function updateLatestCapture(dataURL) {
+      latestCaptureDiv.innerHTML = `
+                <img src="${dataURL}" style="max-width: 100%; max-height: 200px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);" alt="Latest capture">
+                <p style="margin-top: 10px; color: #666; font-size: 0.9rem;">Captured at ${new Date().toLocaleString()}</p>
+            `;
+    }
+
+    // Show status message
+    function showStatus(message, type) {
+      statusDiv.textContent = message;
+      statusDiv.className = `status ${type}`;
+      statusDiv.style.display = 'block';
+
+      setTimeout(() => {
+        statusDiv.style.display = 'none';
+      }, 5000);
+    }
+
+    // Handle browser compatibility
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showStatus('Error: Your browser does not support camera access.', 'error');
+      startCameraBtn.disabled = true;
+    }
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    });
+  </script>
+</body>
+
+</html>
