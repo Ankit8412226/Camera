@@ -7,7 +7,7 @@
   <title>Islamic Wedding Invitation - Blessed Union</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
     * {
       margin: 0;
@@ -16,8 +16,8 @@
     }
 
     body {
-      font-family: 'Amiri', serif;
-      background: #000;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -26,219 +26,96 @@
       overflow-x: hidden;
     }
 
-    .video-container {
+    .background-animation {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
+      background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
     }
 
-    .video-background {
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at center,
-          rgba(15, 76, 117, 0.9) 0%,
-          rgba(50, 130, 184, 0.8) 35%,
-          rgba(187, 225, 250, 0.7) 100%);
-      animation: backgroundShift 10s ease-in-out infinite;
-    }
-
-    @keyframes backgroundShift {
-
-      0%,
-      100% {
-        background: radial-gradient(ellipse at center,
-            rgba(15, 76, 117, 0.9) 0%,
-            rgba(50, 130, 184, 0.8) 35%,
-            rgba(187, 225, 250, 0.7) 100%);
-      }
-
-      50% {
-        background: radial-gradient(ellipse at center,
-            rgba(30, 60, 114, 0.9) 0%,
-            rgba(42, 82, 152, 0.8) 35%,
-            rgba(74, 144, 226, 0.7) 100%);
-      }
-    }
-
-    .video-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg,
-          rgba(30, 60, 114, 0.6),
-          rgba(42, 82, 152, 0.5),
-          rgba(30, 60, 114, 0.6));
-      animation: overlayPulse 6s ease-in-out infinite;
-    }
-
-    @keyframes overlayPulse {
-
-      0%,
-      100% {
-        opacity: 0.6;
-      }
-
-      33% {
-        opacity: 0.4;
-      }
-
-      66% {
-        opacity: 0.8;
-      }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .invitation-card {
       width: 100%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(15px);
-      border-radius: 35px;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+      max-width: 850px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
       overflow: hidden;
       position: relative;
-      animation: cardEntrance 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border: 3px solid rgba(255, 255, 255, 0.4);
+      animation: cardFloat 6s ease-in-out infinite;
+      border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
-    @keyframes cardEntrance {
-      0% {
-        opacity: 0;
-        transform: scale(0.7) rotateY(180deg) translateY(100px);
-      }
-
-      50% {
-        opacity: 0.7;
-        transform: scale(0.9) rotateY(90deg) translateY(50px);
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1) rotateY(0deg) translateY(0px);
-      }
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(0.3deg); }
     }
 
     .card-header {
-      background: linear-gradient(135deg,
-          rgba(15, 76, 117, 0.95) 0%,
-          rgba(30, 60, 114, 0.95) 25%,
-          rgba(42, 82, 152, 0.95) 50%,
-          rgba(50, 130, 184, 0.95) 75%,
-          rgba(74, 144, 226, 0.95) 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
       color: white;
-      padding: 50px 30px;
+      padding: 60px 40px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
 
-    .geometric-pattern {
+    .header-pattern {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.15;
-      background-image:
-        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
-        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
-        repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.1) 15px, rgba(255, 255, 255, 0.1) 30px),
-        repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.1) 15px, rgba(255, 255, 255, 0.1) 30px);
-      background-size: 50px 50px, 50px 50px, 60px 60px, 60px 60px;
-      animation: patternMove 12s linear infinite;
+      opacity: 0.1;
+      background-image: 
+        radial-gradient(circle at 25% 25%, white 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, white 2px, transparent 2px);
+      background-size: 40px 40px;
+      animation: patternFlow 20s linear infinite;
     }
 
-    @keyframes patternMove {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-
-      100% {
-        transform: translate(60px, 60px) rotate(360deg);
-      }
+    @keyframes patternFlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(40px, 40px); }
     }
 
-    .allah-name {
-      font-family: 'Noto Naskh Arabic', serif;
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
-      animation: divineGlow 4s ease-in-out infinite;
-      color: #fff;
-    }
-
-    @keyframes divineGlow {
-
-      0%,
-      100% {
-        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 255, 255, 0.3);
-        transform: scale(1);
-      }
-
-      50% {
-        text-shadow: 3px 3px 20px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 255, 255, 0.8);
-        transform: scale(1.05);
-      }
-    }
-
-    .bismillah {
-      font-family: 'Scheherazade New', serif;
-      font-size: 32px;
+    .blessing-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
       font-weight: 700;
       margin-bottom: 15px;
-      position: relative;
-      z-index: 2;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-      animation: textGlow 3s ease-in-out infinite;
+      text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+      animation: titleGlow 4s ease-in-out infinite;
     }
 
-    @keyframes textGlow {
-
-      0%,
-      100% {
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-      }
-
-      50% {
-        text-shadow: 2px 2px 20px rgba(255, 255, 255, 0.9);
-      }
+    @keyframes titleGlow {
+      0%, 100% { text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3); }
+      50% { text-shadow: 2px 2px 25px rgba(255, 255, 255, 0.6); }
     }
 
-    .bismillah-translation {
-      font-size: 18px;
+    .subtitle {
+      font-size: 20px;
       opacity: 0.95;
-      position: relative;
-      z-index: 2;
-      animation: fadeInOut 5s ease-in-out infinite;
-      font-style: italic;
-    }
-
-    @keyframes fadeInOut {
-
-      0%,
-      100% {
-        opacity: 0.95;
-      }
-
-      50% {
-        opacity: 1;
-      }
+      font-weight: 300;
+      letter-spacing: 1px;
     }
 
     .card-body {
       padding: 60px 50px;
       text-align: center;
       position: relative;
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.98) 0%,
-          rgba(248, 250, 252, 0.95) 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
     }
 
     .floating-elements {
@@ -251,300 +128,130 @@
       overflow: hidden;
     }
 
-    .floating-star {
+    .floating-icon {
       position: absolute;
-      color: rgba(30, 60, 114, 0.4);
-      font-size: 24px;
-      animation: floatingStar 8s ease-in-out infinite;
+      color: rgba(102, 126, 234, 0.3);
+      font-size: 20px;
+      animation: floatIcon 8s ease-in-out infinite;
     }
 
-    .floating-star:nth-child(1) {
-      top: 10%;
-      left: 10%;
-      animation-delay: 0s;
-    }
+    .floating-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+    .floating-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: 4s; }
+    .floating-icon:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 6s; }
+    .floating-icon:nth-child(5) { top: 50%; left: 5%; animation-delay: 1s; }
+    .floating-icon:nth-child(6) { top: 60%; right: 5%; animation-delay: 3s; }
 
-    .floating-star:nth-child(2) {
-      top: 20%;
-      right: 15%;
-      animation-delay: 2s;
-    }
-
-    .floating-star:nth-child(3) {
-      bottom: 30%;
-      left: 20%;
-      animation-delay: 4s;
-    }
-
-    .floating-star:nth-child(4) {
-      bottom: 15%;
-      right: 10%;
-      animation-delay: 6s;
-    }
-
-    .floating-star:nth-child(5) {
-      top: 50%;
-      left: 5%;
-      animation-delay: 1s;
-    }
-
-    .floating-star:nth-child(6) {
-      top: 60%;
-      right: 5%;
-      animation-delay: 3s;
-    }
-
-    @keyframes floatingStar {
-
-      0%,
-      100% {
-        transform: translateY(0px) rotate(0deg) scale(1);
-        opacity: 0.4;
-      }
-
-      25% {
-        transform: translateY(-20px) rotate(90deg) scale(1.2);
-        opacity: 0.7;
-      }
-
-      50% {
-        transform: translateY(-40px) rotate(180deg) scale(1.5);
-        opacity: 1;
-      }
-
-      75% {
-        transform: translateY(-20px) rotate(270deg) scale(1.2);
-        opacity: 0.7;
-      }
-    }
-
-    .praise-allah {
-      font-family: 'Noto Naskh Arabic', serif;
-      font-size: 28px;
-      color: #1e3c72;
-      margin-bottom: 20px;
-      animation: praiseGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes praiseGlow {
-
-      0%,
-      100% {
-        color: #1e3c72;
-      }
-
-      50% {
-        color: #2a5298;
-        text-shadow: 0 0 10px rgba(42, 82, 152, 0.5);
-      }
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.3; }
+      25% { transform: translateY(-15px) rotate(90deg) scale(1.1); opacity: 0.6; }
+      50% { transform: translateY(-30px) rotate(180deg) scale(1.3); opacity: 1; }
+      75% { transform: translateY(-15px) rotate(270deg) scale(1.1); opacity: 0.6; }
     }
 
     .event-title {
+      font-family: 'Playfair Display', serif;
       font-size: 48px;
       font-weight: 700;
-      background: linear-gradient(135deg, #1e3c72, #2a5298, #4a90e2, #74b9ff);
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 30px;
-      position: relative;
+      margin: 30px 0;
       animation: titlePulse 3s ease-in-out infinite;
     }
 
     @keyframes titlePulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.08);
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
-    .event-title::after {
-      content: '';
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 6px;
-      background: linear-gradient(90deg, #1e3c72, #2a5298, #4a90e2, #74b9ff);
-      border-radius: 3px;
-      animation: lineExpand 4s ease-in-out infinite;
-    }
-
-    @keyframes lineExpand {
-
-      0%,
-      100% {
-        width: 200px;
-        opacity: 0.8;
-      }
-
-      50% {
-        width: 300px;
-        opacity: 1;
-      }
+    .blessing-text {
+      font-size: 22px;
+      color: #555;
+      margin: 30px 0;
+      font-style: italic;
+      font-weight: 300;
     }
 
     .couple-names {
-      font-size: 38px;
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
       font-weight: 700;
-      color: #1e3c72;
+      color: #667eea;
       margin: 40px 0;
       position: relative;
     }
 
     .couple-names .ampersand {
-      font-size: 45px;
-      color: #e74c3c;
+      font-size: 48px;
+      color: #f093fb;
       margin: 0 20px;
       animation: heartBeat 2s ease-in-out infinite;
     }
 
     @keyframes heartBeat {
-
-      0%,
-      100% {
-        transform: scale(1) rotate(0deg);
-      }
-
-      25% {
-        transform: scale(1.1) rotate(5deg);
-      }
-
-      50% {
-        transform: scale(1.3) rotate(0deg);
-      }
-
-      75% {
-        transform: scale(1.1) rotate(-5deg);
-      }
-    }
-
-    .blessing-text {
-      font-size: 20px;
-      color: #2c3e50;
-      margin: 30px 0;
-      font-style: italic;
-      opacity: 0.9;
-      animation: blessFlow 4s ease-in-out infinite;
-    }
-
-    @keyframes blessFlow {
-
-      0%,
-      100% {
-        opacity: 0.9;
-      }
-
-      50% {
-        opacity: 1;
-        text-shadow: 0 0 5px rgba(44, 62, 80, 0.3);
-      }
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.1) rotate(2deg); }
+      50% { transform: scale(1.2) rotate(0deg); }
+      75% { transform: scale(1.1) rotate(-2deg); }
     }
 
     .event-details {
       margin: 50px 0;
       display: grid;
-      gap: 30px;
+      gap: 25px;
     }
 
     .detail-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 25px;
-      background: linear-gradient(135deg,
-          rgba(30, 60, 114, 0.05) 0%,
-          rgba(42, 82, 152, 0.08) 100%);
+      justify-content: flex-start;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.08) 100%);
       border-radius: 20px;
-      border-left: 6px solid #1e3c72;
-      border-right: 2px solid rgba(30, 60, 114, 0.2);
+      border-left: 5px solid #667eea;
       opacity: 0;
-      animation: slideInDetail 1.5s ease-out forwards;
+      animation: slideInDetail 1.2s ease-out forwards;
       transition: all 0.4s ease;
-      box-shadow: 0 5px 15px rgba(30, 60, 114, 0.1);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
     }
 
     .detail-item:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 15px 40px rgba(30, 60, 114, 0.25);
-      background: linear-gradient(135deg,
-          rgba(30, 60, 114, 0.08) 0%,
-          rgba(42, 82, 152, 0.12) 100%);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.12) 100%);
     }
 
-    .detail-item:nth-child(1) {
-      animation-delay: 0.5s;
-    }
-
-    .detail-item:nth-child(2) {
-      animation-delay: 0.8s;
-    }
-
-    .detail-item:nth-child(3) {
-      animation-delay: 1.1s;
-    }
-
-    .detail-item:nth-child(4) {
-      animation-delay: 1.4s;
-    }
-
-    .detail-item:nth-child(5) {
-      animation-delay: 1.7s;
-    }
+    .detail-item:nth-child(1) { animation-delay: 0.3s; }
+    .detail-item:nth-child(2) { animation-delay: 0.6s; }
+    .detail-item:nth-child(3) { animation-delay: 0.9s; }
+    .detail-item:nth-child(4) { animation-delay: 1.2s; }
+    .detail-item:nth-child(5) { animation-delay: 1.5s; }
 
     @keyframes slideInDetail {
-      from {
-        opacity: 0;
-        transform: translateX(-80px) rotate(-5deg);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateX(0) rotate(0deg);
-      }
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     .detail-icon {
       width: 70px;
       height: 70px;
-      background: linear-gradient(135deg, #1e3c72, #2a5298, #4a90e2);
+      background: linear-gradient(135deg, #667eea, #764ba2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      margin-right: 30px;
+      margin-right: 25px;
       font-size: 24px;
-      box-shadow: 0 8px 20px rgba(30, 60, 114, 0.4);
-      animation: iconRotate 6s linear infinite;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      animation: iconPulse 4s ease-in-out infinite;
     }
 
-    @keyframes iconRotate {
-      0% {
-        transform: rotate(0deg) scale(1);
-      }
-
-      25% {
-        transform: rotate(15deg) scale(1.1);
-      }
-
-      50% {
-        transform: rotate(0deg) scale(1);
-      }
-
-      75% {
-        transform: rotate(-15deg) scale(1.1);
-      }
-
-      100% {
-        transform: rotate(0deg) scale(1);
-      }
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); }
+      50% { transform: scale(1.1); box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5); }
     }
 
     .detail-text {
@@ -554,167 +261,96 @@
 
     .detail-title {
       font-size: 22px;
-      font-weight: 700;
-      color: #1e3c72;
+      font-weight: 600;
+      color: #667eea;
       margin-bottom: 8px;
     }
 
     .detail-subtitle {
-      font-size: 18px;
+      font-size: 16px;
       color: #666;
-      line-height: 1.4;
+      line-height: 1.5;
+      font-weight: 400;
     }
 
-    .quranic-verse {
-      background: linear-gradient(135deg,
-          rgba(30, 60, 114, 0.08) 0%,
-          rgba(42, 82, 152, 0.12) 50%,
-          rgba(74, 144, 226, 0.08) 100%);
+    .blessing-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%);
       padding: 40px;
       margin: 50px 0;
       border-radius: 25px;
-      border: 3px solid rgba(30, 60, 114, 0.2);
-      font-family: 'Scheherazade New', serif;
-      font-size: 24px;
-      font-style: italic;
-      color: #2c3e50;
-      position: relative;
-      animation: verseGlow 6s ease-in-out infinite;
-      text-align: center;
-      line-height: 1.6;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      animation: blessGlow 5s ease-in-out infinite;
     }
 
-    @keyframes verseGlow {
-
-      0%,
-      100% {
-        box-shadow: 0 10px 30px rgba(30, 60, 114, 0.15);
-        transform: scale(1);
-      }
-
-      50% {
-        box-shadow: 0 20px 60px rgba(30, 60, 114, 0.35);
-        transform: scale(1.02);
-      }
+    @keyframes blessGlow {
+      0%, 100% { box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15); }
+      50% { box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3); }
     }
 
-    .quranic-verse::before {
-      content: '"';
-      position: absolute;
-      top: -30px;
-      left: 30px;
-      font-size: 100px;
-      color: #1e3c72;
-      opacity: 0.15;
+    .blessing-title-section {
+      font-size: 26px;
+      font-weight: 600;
+      color: #667eea;
+      margin-bottom: 20px;
     }
 
-    .quranic-verse::after {
-      content: '"';
-      position: absolute;
-      bottom: -50px;
-      right: 30px;
-      font-size: 100px;
-      color: #1e3c72;
-      opacity: 0.15;
-      transform: rotate(180deg);
-    }
-
-    .dua-section {
-      background: linear-gradient(135deg,
-          rgba(74, 144, 226, 0.1) 0%,
-          rgba(42, 82, 152, 0.1) 100%);
-      padding: 35px;
-      margin: 40px 0;
-      border-radius: 20px;
-      border: 2px solid rgba(74, 144, 226, 0.2);
-      animation: duaGlow 5s ease-in-out infinite;
-    }
-
-    @keyframes duaGlow {
-
-      0%,
-      100% {
-        box-shadow: 0 5px 20px rgba(74, 144, 226, 0.1);
-      }
-
-      50% {
-        box-shadow: 0 15px 40px rgba(74, 144, 226, 0.3);
-      }
-    }
-
-    .dua-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #1e3c72;
-      margin-bottom: 15px;
-    }
-
-    .dua-text {
-      font-family: 'Scheherazade New', serif;
+    .blessing-content {
       font-size: 20px;
-      color: #2c3e50;
-      line-height: 1.5;
+      color: #555;
+      line-height: 1.6;
       font-style: italic;
     }
 
     .card-footer {
-      background: linear-gradient(135deg,
-          rgba(15, 76, 117, 0.95) 0%,
-          rgba(30, 60, 114, 0.95) 25%,
-          rgba(42, 82, 152, 0.95) 50%,
-          rgba(50, 130, 184, 0.95) 75%,
-          rgba(74, 144, 226, 0.95) 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
       color: white;
-      padding: 40px;
+      padding: 50px 40px;
       text-align: center;
       position: relative;
     }
 
     .host-name {
-      font-size: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       animation: nameShine 4s ease-in-out infinite;
     }
 
     @keyframes nameShine {
-
-      0%,
-      100% {
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-      }
-
-      50% {
-        text-shadow: 2px 2px 25px rgba(255, 255, 255, 0.9);
-      }
+      0%, 100% { text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); }
+      50% { text-shadow: 2px 2px 20px rgba(255, 255, 255, 0.8); }
     }
 
     .contact-info {
       font-size: 18px;
       opacity: 0.95;
-      margin-bottom: 20px;
-      line-height: 1.4;
+      margin-bottom: 25px;
+      line-height: 1.6;
     }
 
-    .closing-verse {
-      font-size: 16px;
-      opacity: 0.9;
-      font-style: italic;
-      margin-top: 15px;
+    .contact-info i {
+      margin-right: 10px;
+      color: #f093fb;
     }
 
     .rsvp-section {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       padding: 25px;
-      margin-top: 20px;
+      margin-top: 25px;
       border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .rsvp-title {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 22px;
+      font-weight: 600;
       margin-bottom: 10px;
+    }
+
+    .rsvp-text {
+      font-size: 16px;
+      opacity: 0.9;
     }
 
     @media (max-width: 768px) {
@@ -724,19 +360,15 @@
       }
 
       .event-title {
-        font-size: 32px;
+        font-size: 36px;
       }
 
       .couple-names {
+        font-size: 32px;
+      }
+
+      .blessing-title {
         font-size: 28px;
-      }
-
-      .bismillah {
-        font-size: 26px;
-      }
-
-      .allah-name {
-        font-size: 36px;
       }
 
       .card-body {
@@ -758,66 +390,47 @@
       }
     }
 
-    /* Sparkle animation */
     .sparkle {
       position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.8);
+      width: 6px;
+      height: 6px;
+      background: rgba(240, 147, 251, 0.8);
       border-radius: 50%;
       animation: sparkleAnim 3s linear infinite;
     }
 
     @keyframes sparkleAnim {
-      0% {
-        opacity: 0;
-        transform: scale(0);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scale(0);
-      }
+      0% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+      100% { opacity: 0; transform: scale(0) rotate(360deg); }
     }
   </style>
 </head>
 
 <body>
-  <div class="video-container">
-    <div class="video-background"></div>
-    <canvas id="videoCanvas" class="video-background"></canvas>
-    <div class="video-overlay"></div>
-  </div>
+  <div class="background-animation"></div>
 
   <div class="invitation-card">
     <div class="card-header">
-      <div class="geometric-pattern"></div>
-      <div class="allah-name">ﷲ</div>
-      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
-      <div class="bismillah-translation">In the Name of Allah, the Most Gracious, the Most Merciful</div>
+      <div class="header-pattern"></div>
+      <div class="blessing-title">With Allah's Blessings</div>
+      <div class="subtitle">We invite you to witness a sacred union</div>
     </div>
 
     <div class="card-body">
       <div class="floating-elements">
-        <div class="floating-star">✦</div>
-        <div class="floating-star">✧</div>
-        <div class="floating-star">✦</div>
-        <div class="floating-star">✧</div>
-        <div class="floating-star">☪</div>
-        <div class="floating-star">✦</div>
+        <div class="floating-icon"><i class="fas fa-heart"></i></div>
+        <div class="floating-icon"><i class="fas fa-star"></i></div>
+        <div class="floating-icon"><i class="fas fa-dove"></i></div>
+        <div class="floating-icon"><i class="fas fa-rings-wedding"></i></div>
+        <div class="floating-icon"><i class="fas fa-mosque"></i></div>
+        <div class="floating-icon"><i class="fas fa-hands-praying"></i></div>
       </div>
-
-      <div class="praise-allah">الحمد لله رب العالمين</div>
 
       <h1 class="event-title">Nikah Ceremony</h1>
 
       <div class="blessing-text">
-        "With the blessings of Allah, we invite you to witness the sacred union"
+        "Join us as we begin our journey together in faith and love"
       </div>
 
       <div class="couple-names">
@@ -831,8 +444,7 @@
           </div>
           <div class="detail-text">
             <div class="detail-title">Saturday, 15th Sha'ban 1447 AH</div>
-            <div class="detail-subtitle">Corresponding to August 15th, 2025 • 6:00 PM onwards<br>Maghrib prayers will be
-              offered together</div>
+            <div class="detail-subtitle">Corresponding to August 15th, 2025 • 6:00 PM onwards<br>Maghrib prayers will be offered together</div>
           </div>
         </div>
 
@@ -842,8 +454,7 @@
           </div>
           <div class="detail-text">
             <div class="detail-title">Masjid Al-Noor Community Hall</div>
-            <div class="detail-subtitle">123 Islamic Center Street, Blessed City<br>Separate seating arrangements for
-              men and women</div>
+            <div class="detail-subtitle">123 Islamic Center Street, Blessed City<br>Separate seating arrangements for men and women</div>
           </div>
         </div>
 
@@ -853,8 +464,7 @@
           </div>
           <div class="detail-text">
             <div class="detail-title">Walima Feast</div>
-            <div class="detail-subtitle">Traditional Halal cuisine prepared with love<br>Including Middle Eastern and
-              South Asian delicacies</div>
+            <div class="detail-subtitle">Traditional Halal cuisine prepared with love<br>Including Middle Eastern and South Asian delicacies</div>
           </div>
         </div>
 
@@ -863,9 +473,8 @@
             <i class="fas fa-hands-praying"></i>
           </div>
           <div class="detail-text">
-            <div class="detail-title">Your Duas & Presence</div>
-            <div class="detail-subtitle">Your prayers and blessings are the greatest gift<br>Join us in seeking Allah's
-              blessings for the couple</div>
+            <div class="detail-title">Your Prayers & Presence</div>
+            <div class="detail-subtitle">Your prayers and blessings are the greatest gift<br>Join us in seeking Allah's blessings for the couple</div>
           </div>
         </div>
 
@@ -875,27 +484,15 @@
           </div>
           <div class="detail-text">
             <div class="detail-title">Gift Information</div>
-            <div class="detail-subtitle">Your presence is our present<br>If you wish to give, charity in couple's name
-              is preferred</div>
+            <div class="detail-subtitle">Your presence is our present<br>If you wish to give, charity in the couple's name is preferred</div>
           </div>
         </div>
       </div>
 
-      <div class="quranic-verse">
-        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم
-        مَّوَدَّةً وَرَحْمَةً
-        <br><br>
-        "And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility
-        with them, and He has put love and mercy between your hearts."
-        <br><strong>- Surah Ar-Rum, Verse 21</strong>
-      </div>
-
-      <div class="dua-section">
-        <div class="dua-title">Special Dua for the Couple</div>
-        <div class="dua-text">
-          بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
-          <br><br>
-          "May Allah bless you both, and may He bless your union, and bring you together in goodness."
+      <div class="blessing-section">
+        <div class="blessing-title-section">Special Prayer for the Couple</div>
+        <div class="blessing-content">
+          "May Allah bless this union with love, understanding, and endless joy. May their home be filled with laughter, their hearts with contentment, and their lives with Allah's infinite mercy and guidance."
         </div>
       </div>
     </div>
@@ -903,179 +500,22 @@
     <div class="card-footer">
       <div class="host-name">The Rahman & Al-Zahra Families</div>
       <div class="contact-info">
-        <i class="fas fa-phone"></i> +1 (555) 123-4567 | +1 (555) 987-6543<br>
-        <i class="fas fa-envelope"></i> rahman.family@email.com<br>
-        <i class="fas fa-whatsapp"></i> WhatsApp: +1 (555) 111-2222
+        <div><i class="fas fa-phone"></i> +1 (555) 123-4567 | +1 (555) 987-6543</div>
+        <div><i class="fas fa-envelope"></i> rahman.family@email.com</div>
+        <div><i class="fas fa-whatsapp"></i> WhatsApp: +1 (555) 111-2222</div>
       </div>
 
       <div class="rsvp-section">
         <div class="rsvp-title">RSVP Required</div>
-        <div>Please confirm your attendance by August 10th, 2025</div>
-      </div>
-
-      <div class="closing-verse">
-        رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ
-        <br><br>
-        "Our Lord, grant us from among our wives and offspring comfort to our eyes"
-        <br><strong>- Quran 25:74</strong>
+        <div class="rsvp-text">Please confirm your attendance by August 10th, 2025</div>
       </div>
     </div>
   </div>
 
   <script>
-    // Create animated background with Islamic geometric patterns
-    const canvas = document.getElementById('videoCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // Enhanced Islamic geometric patterns and particles
-    const particles = [];
-    const islamicPatterns = [];
-    const colors = [
-      'rgba(15, 76, 117, 0.4)',
-      'rgba(30, 60, 114, 0.4)',
-      'rgba(42, 82, 152, 0.4)',
-      'rgba(74, 144, 226, 0.4)',
-      'rgba(50, 130, 184, 0.4)'
-    ];
-
-    class IslamicParticle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 4 + 2;
-        this.speedX = (Math.random() - 0.5) * 1.5;
-        this.speedY = (Math.random() - 0.5) * 1.5;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.angle = Math.random() * 360;
-        this.rotation = (Math.random() - 0.5) * 1.5;
-        this.pulse = Math.random() * Math.PI * 2;
-        this.pulseSpeed = 0.02 + Math.random() * 0.02;
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.angle += this.rotation;
-        this.pulse += this.pulseSpeed;
-
-        // Boundary wrapping
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-      }
-
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle * Math.PI / 180);
-
-        const pulseSize = this.size * (1 + Math.sin(this.pulse) * 0.3);
-
-        ctx.fillStyle = this.color;
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 1;
-
-        // Draw 8-pointed Islamic star
-        ctx.beginPath();
-        for (let i = 0; i < 16; i++) {
-          const angle = (i * Math.PI) / 8;
-          const radius = i % 2 === 0 ? pulseSize : pulseSize * 0.5;
-          const x = Math.cos(angle) * radius;
-          const y = Math.sin(angle) * radius;
-          if (i === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-      }
-    }
-
-    class IslamicPattern {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 60 + 30;
-        this.angle = Math.random() * 360;
-        this.rotation = (Math.random() - 0.5) * 0.5;
-        this.opacity = Math.random() * 0.1 + 0.05;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-      }
-
-      update() {
-        this.angle += this.rotation;
-      }
-
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle * Math.PI / 180);
-        ctx.globalAlpha = this.opacity;
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 2;
-
-        // Draw Islamic geometric pattern
-        const sides = 8;
-        const radius = this.size;
-
-        // Outer octagon
-        ctx.beginPath();
-        for (let i = 0; i < sides; i++) {
-          const angle = (i * 2 * Math.PI) / sides;
-          const x = Math.cos(angle) * radius;
-          const y = Math.sin(angle) * radius;
-          if (i === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-        ctx.closePath();
-        ctx.stroke();
-
-        // Inner star pattern
-        ctx.beginPath();
-        for (let i = 0; i < sides; i++) {
-          const angle1 = (i * 2 * Math.PI) / sides;
-          const angle2 = ((i + 2) * 2 * Math.PI) / sides;
-          const x1 = Math.cos(angle1) * radius * 0.7;
-          const y1 = Math.sin(angle1) * radius * 0.7;
-          const x2 = Math.cos(angle2) * radius * 0.7;
-          const y2 = Math.sin(angle2) * radius * 0.7;
-          ctx.moveTo(x1, y1);
-          ctx.lineTo(x2, y2);
-        }
-        ctx.stroke();
-
-        ctx.restore();
-      }
-    }
-
-    // Initialize particles and patterns
-    for (let i = 0; i < 60; i++) {
-      particles.push(new IslamicParticle());
-    }
-
-    for (let i = 0; i < 8; i++) {
-      islamicPatterns.push(new IslamicPattern());
-    }
-
-    // Sparkle effect
+    // Create sparkle effects
     function createSparkles() {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         const sparkle = document.createElement('div');
         sparkle.className = 'sparkle';
         sparkle.style.left = Math.random() * window.innerWidth + 'px';
@@ -1091,226 +531,78 @@
 
     setInterval(createSparkles, 2000);
 
-    // Animation loop
-    function animate() {
-      // Create flowing gradient background
-      const gradient = ctx.createRadialGradient(
-        canvas.width / 2, canvas.height / 2, 0,
-        canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height)
-      );
-
-      const time = Date.now() * 0.001;
-      const color1 = `hsla(${210 + Math.sin(time * 0.5) * 10}, 70%, 25%, 0.1)`;
-      const color2 = `hsla(${220 + Math.sin(time * 0.3) * 15}, 60%, 40%, 0.15)`;
-      const color3 = `hsla(${200 + Math.sin(time * 0.7) * 20}, 80%, 60%, 0.1)`;
-
-      gradient.addColorStop(0, color1);
-      gradient.addColorStop(0.5, color2);
-      gradient.addColorStop(1, color3);
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Update and draw Islamic patterns
-      islamicPatterns.forEach(pattern => {
-        pattern.update();
-        pattern.draw();
-      });
-
-      // Update and draw particles
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-
-      // Draw connecting lines between nearby particles
-      particles.forEach((particle, index) => {
-        particles.slice(index + 1).forEach(otherParticle => {
-          const distance = Math.sqrt(
-            Math.pow(particle.x - otherParticle.x, 2) +
-            Math.pow(particle.y - otherParticle.y, 2)
-          );
-
-          if (distance < 120) {
-            const opacity = (120 - distance) / 120 * 0.2;
-            ctx.strokeStyle = `rgba(30, 60, 114, ${opacity})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.stroke();
-          }
-        });
-      });
-
-      // Add flowing light effect
-      const lightX = canvas.width / 2 + Math.sin(time * 0.8) * canvas.width * 0.3;
-      const lightY = canvas.height / 2 + Math.cos(time * 0.6) * canvas.height * 0.2;
-
-      const lightGradient = ctx.createRadialGradient(lightX, lightY, 0, lightX, lightY, 100);
-      lightGradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
-      lightGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      ctx.fillStyle = lightGradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
     // Enhanced interactive effects
     document.addEventListener('DOMContentLoaded', function () {
       const card = document.querySelector('.invitation-card');
       const detailItems = document.querySelectorAll('.detail-item');
-      const verses = [
-        {
-          arabic: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
-          english: "And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts.",
-          reference: "Surah Ar-Rum, Verse 21"
-        },
-        {
-          arabic: "وَمِن كُلِّ شَيْءٍ خَلَقْنَا زَوْجَيْنِ لَعَلَّكُمْ تَذَكَّرُونَ",
-          english: "And of all things We created two mates; perhaps you will remember.",
-          reference: "Surah Adh-Dhariyat, Verse 49"
-        },
-        {
-          arabic: "هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ",
-          english: "They are clothing for you and you are clothing for them.",
-          reference: "Surah Al-Baqarah, Verse 187"
-        }
-      ];
 
-      // Enhanced mouse move effect with 3D transformation
+      // 3D card tilt effect
       document.addEventListener('mousemove', function (e) {
         const mouseX = e.clientX / window.innerWidth;
         const mouseY = e.clientY / window.innerHeight;
 
         card.style.transform = `
-                    perspective(1200px)
-                    rotateY(${(mouseX - 0.5) * 15}deg)
-                    rotateX(${(mouseY - 0.5) * -15}deg)
-                    translateZ(20px)
-                `;
-
-        card.style.boxShadow = `
-                    ${(mouseX - 0.5) * 50}px
-                    ${(mouseY - 0.5) * 50}px
-                    100px rgba(0, 0, 0, 0.3)
-                `;
+          perspective(1000px)
+          rotateY(${(mouseX - 0.5) * 10}deg)
+          rotateX(${(mouseY - 0.5) * -10}deg)
+          translateZ(10px)
+        `;
       });
 
-      // Reset transform when mouse leaves
       document.addEventListener('mouseleave', function () {
-        card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0px)';
-        card.style.boxShadow = '0 40px 100px rgba(0, 0, 0, 0.5)';
+        card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px)';
       });
 
-      // Enhanced click effects for detail items
+      // Detail item interactions
       detailItems.forEach(item => {
-        item.addEventListener('click', function () {
-          this.style.transform = 'translateY(-8px) scale(0.98)';
-          this.style.boxShadow = '0 5px 20px rgba(30, 60, 114, 0.4)';
+        item.addEventListener('mouseenter', function () {
+          this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
 
+        item.addEventListener('mouseleave', function () {
+          this.style.transform = 'translateY(0px) scale(1)';
+        });
+
+        item.addEventListener('click', function () {
+          this.style.transform = 'translateY(-5px) scale(0.98)';
           setTimeout(() => {
             this.style.transform = 'translateY(-8px) scale(1.02)';
-            this.style.boxShadow = '0 15px 40px rgba(30, 60, 114, 0.25)';
-          }, 200);
+          }, 150);
         });
       });
 
-      // Auto-cycling Quranic verses
-      let currentVerse = 0;
-      const verseElement = document.querySelector('.quranic-verse');
+      // Add touch effects for mobile
+      if ('ontouchstart' in window) {
+        document.addEventListener('touchstart', function (e) {
+          const touch = e.touches[0];
+          const ripple = document.createElement('div');
+          ripple.style.position = 'fixed';
+          ripple.style.left = touch.clientX + 'px';
+          ripple.style.top = touch.clientY + 'px';
+          ripple.style.width = '20px';
+          ripple.style.height = '20px';
+          ripple.style.borderRadius = '50%';
+          ripple.style.background = 'rgba(102, 126, 234, 0.5)';
+          ripple.style.pointerEvents = 'none';
+          ripple.style.animation = 'rippleEffect 0.6s ease-out';
+          ripple.style.zIndex = '1000';
+          document.body.appendChild(ripple);
 
-      function updateVerse() {
-        verseElement.style.opacity = '0';
-        verseElement.style.transform = 'translateY(20px)';
+          setTimeout(() => ripple.remove(), 600);
+        });
 
-        setTimeout(() => {
-          const verse = verses[currentVerse];
-          verseElement.innerHTML = `
-                        ${verse.arabic}
-                        <br><br>
-                        "${verse.english}"
-                        <br><strong>- ${verse.reference}</strong>
-                    `;
-          verseElement.style.opacity = '1';
-          verseElement.style.transform = 'translateY(0px)';
-          currentVerse = (currentVerse + 1) % verses.length;
-        }, 500);
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes rippleEffect {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(15); opacity: 0; }
+          }
+        `;
+        document.head.appendChild(style);
       }
-
-      setInterval(updateVerse, 10000);
-
-      // Smooth scroll effect for long content
-      function smoothScroll() {
-        const scrolled = window.pageYOffset;
-        const parallax = scrolled * 0.5;
-
-        document.querySelector('.video-overlay').style.transform =
-          `translateY(${parallax}px)`;
-      }
-
-      window.addEventListener('scroll', smoothScroll);
-
-      // Add Islamic prayer time effect (optional enhancement)
-      function addPrayerTimeEffect() {
-        const now = new Date();
-        const hours = now.getHours();
-
-        // Add special effects during traditional prayer times
-        const prayerTimes = [5, 13, 16, 19, 21]; // Approximate prayer times
-
-        if (prayerTimes.includes(hours)) {
-          document.body.style.filter = 'brightness(1.1) contrast(1.05)';
-
-          // Add extra sparkles during prayer times
-          setInterval(() => {
-            createSparkles();
-          }, 1000);
-        }
-      }
-
-      addPrayerTimeEffect();
-
-      // Add loading animation completion
-      setTimeout(() => {
-        card.style.animation = 'none';
-        card.style.transform = 'scale(1) rotateY(0deg) translateY(0px)';
-      }, 3000);
     });
-
-    // Add touch effects for mobile devices
-    if ('ontouchstart' in window) {
-      document.addEventListener('touchstart', function (e) {
-        const touch = e.touches[0];
-        const ripple = document.createElement('div');
-        ripple.style.position = 'fixed';
-        ripple.style.left = touch.clientX + 'px';
-        ripple.style.top = touch.clientY + 'px';
-        ripple.style.width = '20px';
-        ripple.style.height = '20px';
-        ripple.style.borderRadius = '50%';
-        ripple.style.background = 'rgba(74, 144, 226, 0.5)';
-        ripple.style.pointerEvents = 'none';
-        ripple.style.animation = 'rippleEffect 0.6s ease-out';
-        document.body.appendChild(ripple);
-
-        setTimeout(() => ripple.remove(), 600);
-      });
-
-      // Add ripple effect CSS
-      const style = document.createElement('style');
-      style.textContent = `
-                @keyframes rippleEffect {
-                    0% { transform: scale(0); opacity: 1; }
-                    100% { transform: scale(20); opacity: 0; }
-                }
-            `;
-      document.head.appendChild(style);
-    }
   </script>
 </body>
 
 </html>
-
